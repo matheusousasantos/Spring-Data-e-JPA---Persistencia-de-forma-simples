@@ -10,89 +10,39 @@
         http://www.springframework.org/schema/data/jpa
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
 	default-lazy-init="true">
+
+    <!-- Ativa recursos automáticos no Spring como Injeção de Dependecia por anotações -->
+	<context:annotation-config />
+	<context:component-scan base-package="projeto.spring.data.aula.model" />
 	
-	<context:annotation-config/>
-	<context:component-scan base-package="projeto.spring.data.model"/>
-	
-	
-	<!-- Definir uma conexão com o banco de dados -->
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		
-		<!-- Driver do postgres -->
-		<property name="driverClassName" value="org.postgresql.Driver"/>
-		
-		<!-- URL do banco de dados -->
-		<property name="url" value="jdbc:postgresql://localhost:5432/spring-data-teste-aula"></property>
-		
-		<!-- Login  -->
-		<property name="username" value="postgres"></property>
-		
-		<!-- Senha -->
-		<property name="password" value="admin"></property>
-		
-	</bean>
-	
-	
-	<!-- Definindo as configurações do JPA -->
-	<bean id="entityManagerFactory" 
-	class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" scope="singleton">
-	
-		<!-- Fazemos uma referência ao DataSource do banco de dados feito anteriormente -->
-		<property name="dataSource" ref="dataSource"></property>
-		
-		<property name="jpaVendorAdapter">
-			
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVentorAdapter">
-				<!-- Onde entra as propriedades tipo a do Hibernate -->
-				
-				<property name="database" value="POSTGRESQL"/>
-				
-				<!-- Gera automaticamente as tabelas -->
-				<property name="generateDdl" value="true"></property>
-				
-				
-			</bean>
-			
-		</property>
-		
-		<!-- Unidade de persistência -->
-		<!-- O valor virá do arquivo de persistência "persistence.xml" -->
-		<property name="persistenceUnitName" value="projeto-spring-data-aula"/>
-	
-	</bean>
-	
-	<!-- Ativar controle transacional -->
-	<bean id="transactionManager" 
-	class="org.springframework.orm.jpa.JpaTransactionManager" scope="singleton">
-		
-		<!-- Vamos fazer uma referencia ao entityManager criado para o JPA( entityManagerFactory )-->
-		<property name="entityManagerFactory" ref="entityManagerFactory"></property>
-		
-	</bean>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-	
-	<jpa:repositories base-package="projeto.spring.data.dao"/>
-	
+     <!-- Define o DataSource e a conexão com o banco de dados -->
+     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+         <property name="driverClassName" value="org.postgresql.Driver"/>
+         <property name="url" value="jdbc:postgresql://localhost:5432/spring-data-teste-aula"/>
+         <property name="username" value="postgres"/>
+         <property name="password" value="admin"/>
+     </bean>
+     
+     
+     <!-- Define as configurações do JPA -->
+     <bean id="entityManagerFactory" 
+     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" scope="singleton">
+      <property name="dataSource" ref="dataSource"/>
+      <property name="jpaVendorAdapter">
+      	 	<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+      	 	   <property name="database" value="POSTGRESQL"/>
+      	 	   <property name="generateDdl" value="true"/> <!-- Gerar as tabelas no banco -->
+      	 	</bean>
+      </property>
+      <property name="persistenceUnitName" value="projeto-spring-data-aula"/>
+     </bean>
+     
+     <!-- Ativa o controle transacional -->
+     <bean id="transactionManager"
+       class="org.springframework.orm.jpa.JpaTransactionManager" scope="singleton">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />     
+     </bean>
+
+     <!-- Ativa os recursos para os Repository -->
+	<jpa:repositories base-package="projeto.spring.data.aula.dao" />
 </beans>
