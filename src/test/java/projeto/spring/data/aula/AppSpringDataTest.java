@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import projeto.spring.data.aula.dao.InterfaceSpringDataUser;
+import projeto.spring.data.aula.model.UsuarioSpringData;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:META-INF/spring-config.xml"})
@@ -16,9 +17,17 @@ public class AppSpringDataTest {
 	private InterfaceSpringDataUser interfaceSpringDataUser;
 	
 	@Test
-	public void teste( ) {
+	public void testInsert( ) {
 		
-		System.out.println("Olá, Mundo!");
+		UsuarioSpringData usuario = new UsuarioSpringData();
+		
+		usuario.setEmail("matheus@gmail.com");
+		usuario.setNome("Luma");
+		usuario.setIdade(26);
+		usuario.setLogin("123");
+		usuario.setSenha("123");
+		
+		interfaceSpringDataUser.save(usuario);
 		
 	}
 
