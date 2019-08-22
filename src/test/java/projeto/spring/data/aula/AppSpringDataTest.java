@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javafx.animation.Interpolatable;
 import projeto.spring.data.aula.dao.InterfaceSpringDataUser;
 import projeto.spring.data.aula.model.UsuarioSpringData;
 
@@ -46,5 +47,17 @@ public class AppSpringDataTest {
 		System.out.println(usuarioSpringData.get().getIdade());
 		
 	}
+	
+	@Test
+	public void testConsultaAll() {
+		
+		Iterable<UsuarioSpringData> list = interfaceSpringDataUser.findAll();
+		
+		for (UsuarioSpringData usuario : list) {
+			System.out.println(usuario);
+		}
+		
+	}
+
 
 }
