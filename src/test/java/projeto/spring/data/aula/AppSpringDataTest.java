@@ -100,6 +100,14 @@ public class AppSpringDataTest {
 		}
 		
 	}
+	
+	@Test
+	public void testeConsultaNomeParam() {
+		
+		UsuarioSpringData usuario = interfaceSpringDataUser.buscaProNomeParam("Matheus");
+		System.out.println(usuario.getNome());
+		
+	}
 
 
 }
