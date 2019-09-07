@@ -30,5 +30,11 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
 	@Transactional
 	@Query( value = "delete from UsuarioSpringData u where u.nome = ?1" )
 	public void deletePorNome(String nome);
+	
+	@Modifying
+	@Transactional
+	@Query( value = "update UsuarioSpringData u set u.email = ?1 where u.nome = ?2" )
+	public void updateEmailPorNome( String email, String nome );
+
 
 }
