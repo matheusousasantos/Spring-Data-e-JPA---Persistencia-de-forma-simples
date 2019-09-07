@@ -58,6 +58,19 @@ public class AppSpringDataTest {
 		}
 		
 	}
+	
+	@Test
+	public void testeUpdate() {
+		
+		Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(28L);
+		
+		UsuarioSpringData data = usuarioSpringData.get();
+		
+		data.setNome("Usuario Editado");
+		
+		interfaceSpringDataUser.save(data);
+		
+	}
 
 
 }
