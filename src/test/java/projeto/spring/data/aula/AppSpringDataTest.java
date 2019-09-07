@@ -1,5 +1,6 @@
 package projeto.spring.data.aula;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javafx.animation.Interpolatable;
 import projeto.spring.data.aula.dao.InterfaceSpringDataUser;
 import projeto.spring.data.aula.model.UsuarioSpringData;
 
@@ -85,6 +85,19 @@ public class AppSpringDataTest {
 		Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(2L);
 		
 		interfaceSpringDataUser.delete(usuarioSpringData.get());
+		
+	}
+	
+	@Test
+	public void testeConsultaNome() {
+		
+		List<UsuarioSpringData> list = interfaceSpringDataUser.buscaPorNome("Matheus");
+		
+		for (UsuarioSpringData usuarioSpringData : list) {
+			
+			System.out.println(usuarioSpringData.getNome());
+			
+		}
 		
 	}
 
