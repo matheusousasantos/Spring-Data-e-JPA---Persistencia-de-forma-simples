@@ -108,6 +108,13 @@ public class AppSpringDataTest {
 		System.out.println(usuario.getNome());
 		
 	}
+	
+	@Test
+	public void testeDeletePorNome() {
+		
+		interfaceSpringDataUser.deletePorNome("Matheus");
+		
+	}
 
 
 }
