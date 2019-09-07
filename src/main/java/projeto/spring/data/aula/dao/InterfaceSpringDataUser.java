@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import projeto.spring.data.aula.model.UsuarioSpringData;
@@ -14,9 +15,11 @@ import projeto.spring.data.aula.model.UsuarioSpringData;
 @Repository
 public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringData, Long>{
 	
+	@Transactional( readOnly = true )
 	@Query( value = "select p from UsuarioSpringData p where p.nome like %?1%" )
 	public List<UsuarioSpringData> buscaPorNome(String nome);
 	
+	@Transactional( readOnly = true )
 	@Query( value = "select p from UsuarioSpringData p where p.nome = :paramnome" )
 	public UsuarioSpringData buscaProNomeParam(@Param("paramnome") String paramnome);
 	
@@ -32,7 +35,7 @@ public interface InterfaceSpringDataUser extends CrudRepository<UsuarioSpringDat
 	public void deletePorNome(String nome);
 	
 	@Modifying
-	@Transactional
+	@Transactional( timeout = 5)
 	@Query( value = "update UsuarioSpringData u set u.email = ?1 where u.nome = ?2" )
 	public void updateEmailPorNome( String email, String nome );
 
