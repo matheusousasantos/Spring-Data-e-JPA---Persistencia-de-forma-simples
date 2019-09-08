@@ -10,6 +10,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import projeto.spring.data.aula.dao.InterfaceSpringDataUser;
+import projeto.spring.data.aula.dao.InterfaceTelefone;
+import projeto.spring.data.aula.model.Telefone;
 import projeto.spring.data.aula.model.UsuarioSpringData;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,6 +20,9 @@ public class AppSpringDataTest {
 	
 	@Autowired
 	private InterfaceSpringDataUser interfaceSpringDataUser;
+	
+	@Autowired
+	private InterfaceTelefone interfaceTelefone;
 	
 	@Test
 	public void testInsert( ) {
@@ -37,7 +42,7 @@ public class AppSpringDataTest {
 	@Test
 	public void testConsulta() {
 		
-		Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(1L);
+		Optional<UsuarioSpringData> usuarioSpringData = interfaceSpringDataUser.findById(2L);
 		
 		System.out.println(usuarioSpringData.get().getId());
 		System.out.println(usuarioSpringData.get().getEmail());
@@ -45,6 +50,12 @@ public class AppSpringDataTest {
 		System.out.println(usuarioSpringData.get().getLogin());
 		System.out.println(usuarioSpringData.get().getSenha());
 		System.out.println(usuarioSpringData.get().getIdade());
+		
+		for(Telefone telefone : usuarioSpringData.get().getTelefones()) {
+			System.out.println(telefone.getNumero());
+			System.out.println(telefone.getTipo());
+			System.out.println("------------------------------");
+		}
 		
 	}
 	
@@ -120,6 +131,22 @@ public class AppSpringDataTest {
 	public void testeUpdateEmailPorNome() {
 		
 		interfaceSpringDataUser.updateEmailPorNome("update@gmail.com", "Matheus Sousa");
+		
+	}
+	
+	@Test
+	public void testeSetTelefone() {
+		
+		UsuarioSpringData usuario = interfaceSpringDataUser.buscaProNomeParam("Matheus Sousa");
+
+		
+		Telefone telefone = new Telefone();
+		
+		telefone.setTipo("Casa");
+		telefone.setNumero("33221111");
+		telefone.setUsuarioSpringData(usuario);
+		
+		interfaceTelefone.save(telefone);
 		
 	}
 
